@@ -141,7 +141,7 @@ android {
 
     defaultConfig {
         buildConfigField "int", "TELEGRAM_API_ID", System.getenv("TELEGRAM_API_ID") ?: "4"
-buildConfigField "String", "TELEGRAM_API_HASH", "\"${System.getenv('TELEGRAM_API_HASH') ?: '014b35b6184100b085b0d0572f9b5103'}\""
+    buildConfigField "String", "TELEGRAM_API_HASH", "\"${System.getenv('TELEGRAM_API_HASH') ?: '014b35b6184100b085b0d0572f9b5103'}\""
         minSdkVersion 23
         targetSdkVersion 36
 
