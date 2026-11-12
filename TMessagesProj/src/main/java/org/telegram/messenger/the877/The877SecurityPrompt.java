@@ -12,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Simple UI bridge for setting and checking the separate The 877 hidden-chats PIN.
- *
- * This helper does not open the hidden chats screen. The caller must do that only
- * after the onAuthenticated callback is invoked.
+ * UI bridge for the separate The 877 hidden-chats PIN.
+ * Existing PINs must be verified before a replacement PIN can be set.
  */
 public final class The877SecurityPrompt {
 
@@ -26,9 +24,25 @@ public final class The877SecurityPrompt {
     private The877SecurityPrompt() {
     }
 
-    /** Shows first-time PIN setup, or replacement after the caller has authenticated. */
+    /**
+     * First-time setup, or a PIN change after verifying the current PIN.
+     */
     public static void showSetPin(final Activity activity, final int account,
                                   final Runnable onSaved) {
+        if (!isActivityUsable(activity)) {
+            return;
+        }
+
+        if (The877SecurityManager.hasPin(account)) {
+            showUnlock(activity, account, () -> showCreatePin(activity, account, onSaved));
+            return;
+        }
+
+        showCreatePin(activity, account, onSaved);
+    }
+
+    private static void showCreatePin(final Activity activity, final int account,
+                                      final Runnable onSaved) {
         if (!isActivityUsable(activity)) {
             return;
         }
@@ -66,6 +80,12 @@ public final class The877SecurityPrompt {
                     String secondPin = confirmPin.getText().toString();
                     if (!firstPin.equals(secondPin)) {
                         toast(activity, "الرمزان غير متطابقين، حاول مرة ثانية");
+                        return false;
+                    }
+                    // Re-check immediately before saving to avoid bypassing the
+                    // old-PIN gate if a PIN was added while this dialog was open.
+                    if (The877SecurityManager.hasPin(account)) {
+                        toast(activity, "يوجد رمز حالي. تحقق منه أولاً قبل تغييره");
                         return false;
                     }
                     if (!The877SecurityManager.setPin(account, firstPin)) {
