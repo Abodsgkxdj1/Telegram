@@ -1664,7 +1664,15 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter implements
                 array = new ArrayList<>();
             }
         }
-
+        if (folderId == 0 && dialogsType == DialogsActivity.DIALOGS_TYPE_DEFAULT && !isOnlySelect && requestPeerType == null && !parentFragment.isReplyTo) {
+            array = new ArrayList<>(array);
+            for (int i = array.size() - 1; i >= 0; i--) {
+                TLRPC.Dialog dialog = array.get(i);
+                if (dialog != null && !(dialog instanceof DialogsActivity.DialogsHeader) && HiddenChatsManager.isHidden(currentAccount, dialog.id)) {
+                    array.remove(i);
+                }
+            }
+        }
         dialogsCount = array.size();
         isEmpty = false;
         if (dialogsCount == 0 && parentFragment.isArchive()) {
