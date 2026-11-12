@@ -129,7 +129,7 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
 
         searchIcon = new ImageView(context);
         searchIcon.setScaleType(ImageView.ScaleType.CENTER);
-        searchIcon.setImageResource(R.drawable.outline_search_1_24);
+        searchIcon.setImageResource(R.drawable.outline_search_1_26);
         
 
         additionalIconsLayout = new LinearLayout(context);
