@@ -157,7 +157,7 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
                 editText.getText().clear();
             }
         });
-        addView(closeIcon, LayoutHelper.createFrame(24, 24, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT), 12, 0, 12, 0));
+        addView(closeIcon, LayoutHelper.createFrame(26, 26, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT), 12, 0, 12, 0));
 
         searchFilterLayout = new LinearLayout(getContext()) {
             @Override
