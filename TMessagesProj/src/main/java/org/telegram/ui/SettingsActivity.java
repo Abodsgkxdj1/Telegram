@@ -944,7 +944,9 @@ items.add(SettingCell.Factory.of(28, IconBackgroundColors.BLUE.top, IconBackgrou
             case 10:
                 presentSettingFragment(new LanguageSelectActivity());
                 break;
-
+            case 28:
+                presentSettingFragment(new AdditionalSettingsActivity());
+                break;
             case 11:
                 presentSettingFragment(new PremiumPreviewFragment("settings"));
                 break;
